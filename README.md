@@ -1,49 +1,67 @@
 # JWT Security Inspector
 
-A client-side JWT analyzer built with React and the browser's native **Web Crypto API**
-(no server, no token/key ever leaves the browser). Built to practice detecting the two
-most common real-world JWT implementation flaws, both covered in PortSwigger's Web
-Security Academy JWT labs.
+A professional, local-first JWT assessment tool built with React, Vite, and the browser's native **Web Crypto API**.
 
-## What it does
+> Tokens, secrets, and public keys are processed in the browser. The application does not send analysis input to a backend.
 
-- **Decodes** the header and payload of any compact JWT (`header.payload.signature`).
-- **Weak-secret brute force (HS256/384/512):** tests the token's signature against a
-  small wordlist of common/default secrets using `crypto.subtle` HMAC signing, and
-  against a secret you supply.
-- **Signature verification (RS256/384/512, ES256/384/512):** imports a PEM-encoded SPKI
-  public key via `crypto.subtle.importKey` and verifies the token's signature end-to-end.
-- **Algorithm-confusion forging (RS → HS):** given a token's claims and a known RSA/EC
-  public key, forges an `alg: HS256` token signed with the public key material itself —
-  the classic confusion attack against verifiers that trust the `alg` header and accept
-  both key types. The forged token is output for testing against your own endpoint; it
-  is not sent anywhere.
-- Flags **`alg: none`** tokens, since many lenient parsers accept them as unauthenticated.
+## Features
 
-## Why this design
+- Decode compact JWT headers and payloads.
+- Inspect security-sensitive header metadata such as `alg`, `typ`, `kid`, `jku`, `jwk`, `x5u`, and `x5c`.
+- Analyze standard claims including `exp`, `iat`, `nbf`, `iss`, and `aud`.
+- Detect expired tokens, future activation/issued-at values, and missing lifecycle claims.
+- Verify HS256/384/512 signatures with a supplied secret.
+- Test a small bundled weak-secret set for HS-family tokens.
+- Verify RS256/384/512 and ES256/384/512 signatures with a PEM SPKI public key.
+- Generate an RS/ES → HS algorithm-confusion test artifact for authorized endpoint testing.
+- Normalize findings into severity, evidence, explanation, and remediation fields.
+- Provide a deterministic security posture score.
+- Responsive, semantic, keyboard-friendly UI with accessible form labels and status messaging.
+- GitHub Pages deployment through GitHub Actions.
 
-Everything runs through `SubtleCrypto` (`crypto.subtle.importKey`, `.sign`, `.verify`)
-rather than a JS crypto polyfill, so the signature math is delegated to the browser's
-audited crypto implementation — the same approach used by production JWT libraries.
+## Security model
 
-## Running locally
+The inspector is intentionally **client-side only**. Cryptographic operations use `crypto.subtle` where supported by the browser. The algorithm-confusion feature generates a test token locally; generating that artifact does **not** prove that any target endpoint is vulnerable.
+
+A clean result means only that the implemented checks did not identify a finding. It is not a guarantee that the JWT or its consuming application is secure.
+
+## Development
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Project layout
+Create a production build with:
 
+```bash
+npm run build
 ```
+
+## Architecture
+
+```text
 src/
-  App.jsx           UI + orchestration
-  lib/jwt.js         base64url + JWT parsing helpers
-  lib/verify.js       HMAC/RSA/EC verification, weak-secret scan, alg-confusion forge
-  lib/weakSecrets.js  small example wordlist
+├── App.jsx                 application orchestration
+├── components/             semantic, reusable UI components
+│   ├── TokenInput.jsx
+│   ├── SecurityScore.jsx
+│   ├── FindingCard.jsx
+│   └── ClaimTable.jsx
+├── lib/
+│   ├── jwt.js              JWT parsing and algorithm metadata
+│   ├── verify.js           browser-native cryptographic verification
+│   ├── claims.js           lifecycle and standard-claim analysis
+│   ├── findings.js         normalized findings and scoring
+│   └── weakSecrets.js      small bundled test wordlist
+└── styles/
+    └── globals.css         responsive design system
 ```
 
-## Scope / ethics note
+## Deployment
 
-This tool is for testing JWTs and endpoints you own or are authorized to test —
-the same standard that applies to the bug bounty and lab work it was built alongside.
+The repository is configured for GitHub Pages. Vite uses the repository base path `/jwt-security-inspector/`, and the Pages workflow builds `dist/` and deploys it through GitHub Actions.
+
+## Responsible testing
+
+Use this tool only with tokens, applications, and endpoints you own or are explicitly authorized to test. In particular, only send generated algorithm-confusion test artifacts to authorized test targets.
