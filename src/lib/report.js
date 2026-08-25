@@ -1,11 +1,11 @@
 export function buildAssessmentReport({ analysis, score }) {
   const generatedAt = new Date().toISOString();
   return {
-    reportVersion: "1.0",
+    reportVersion: "1.1",
     generatedAt,
     tool: {
       name: "JWT Security Inspector",
-      version: "2.1",
+      version: "2.2",
       processing: "client-side",
     },
     assessment: {
@@ -26,7 +26,8 @@ export function buildAssessmentReport({ analysis, score }) {
     limitations: [
       "A clean result does not prove that the token or consuming application is secure.",
       "Algorithm-confusion artifact generation does not prove target-side vulnerability.",
-      "This report contains decoded token claims; store and share it according to your security policy.",
+      "A decoded token can contain sensitive data; store and share reports according to your security policy.",
+      "Claim requirements such as issuer and audience are application-specific and should be configured by the consuming service.",
     ],
   };
 }
