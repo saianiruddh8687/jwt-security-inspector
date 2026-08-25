@@ -1,0 +1,90 @@
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #17202a;
+  background: #f5f7fa;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; background: #f5f7fa; }
+button, input, textarea { font: inherit; }
+button { -webkit-tap-highlight-color: transparent; }
+
+.app-shell { min-height: 100vh; }
+.site-header, main, .site-footer { width: min(1120px, calc(100% - 32px)); margin-inline: auto; }
+.site-header { display: flex; align-items: center; gap: 12px; padding: 28px 0 20px; }
+.site-header h1 { margin: 2px 0 0; font-size: 18px; letter-spacing: -.02em; }
+.brand-mark { display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid #d8dee8; border-radius: 12px; background: #fff; font-weight: 800; font-size: 12px; letter-spacing: .06em; }
+.version-badge, .algorithm-badge, .privacy-badge { margin-left: auto; border: 1px solid #d8dee8; border-radius: 999px; background: #fff; padding: 6px 10px; color: #536170; font-size: 12px; }
+.eyebrow { margin: 0; color: #667487; font-size: 11px; font-weight: 800; letter-spacing: .11em; text-transform: uppercase; }
+.hero { padding: 42px 0 28px; max-width: 760px; }
+.hero h2 { margin: 8px 0 12px; font-size: clamp(30px, 5vw, 48px); line-height: 1.03; letter-spacing: -.045em; }
+.hero p:last-child { margin: 0; color: #617080; font-size: 16px; line-height: 1.65; }
+.input-panel, .panel, .score-card { border: 1px solid #dce2ea; border-radius: 16px; background: #fff; box-shadow: 0 10px 30px rgba(25, 38, 55, .05); }
+.input-panel { padding: 22px; }
+.section-heading, .results-heading, .panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.section-heading { margin-bottom: 20px; }
+.section-heading h2, .results-heading h2 { margin: 4px 0 0; font-size: 20px; }
+.input-panel label { display: block; margin: 14px 0 7px; font-size: 13px; font-weight: 750; }
+.input-panel label span { color: #7a8795; font-weight: 500; }
+.input-panel textarea, .input-panel input { width: 100%; border: 1px solid #cbd3de; border-radius: 10px; padding: 11px 12px; outline: none; background: #fbfcfd; color: #17202a; transition: border-color .15s, box-shadow .15s; }
+.input-panel textarea:focus, .input-panel input:focus { border-color: #667eea; box-shadow: 0 0 0 3px rgba(102, 126, 234, .13); }
+.input-panel textarea { resize: vertical; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; }
+.field-help { margin: 7px 0 0; color: #788696; font-size: 12px; line-height: 1.5; }
+.input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.primary-button { margin-top: 20px; border: 0; border-radius: 10px; padding: 11px 18px; background: #17202a; color: white; font-weight: 750; cursor: pointer; }
+.primary-button:hover { background: #273442; }
+.primary-button:disabled { cursor: wait; opacity: .65; }
+.error-banner { margin-top: 16px; padding: 14px 16px; border: 1px solid #efc5c5; border-radius: 12px; background: #fff6f6; color: #9c3030; }
+.results { padding: 34px 0 20px; }
+.results-heading { margin-bottom: 16px; }
+.algorithm-badge { margin-left: auto; font-family: ui-monospace, monospace; font-weight: 700; }
+.score-card { display: flex; justify-content: space-between; align-items: center; padding: 22px; margin-bottom: 16px; }
+.score-value { margin-top: 4px; font-size: 42px; font-weight: 800; letter-spacing: -.05em; }
+.score-value span { color: #8a96a5; font-size: 18px; letter-spacing: 0; }
+.score-label { margin: 0; color: #5f6d7c; font-weight: 700; }
+.score-meta { display: flex; flex-direction: column; text-align: right; color: #718091; font-size: 12px; }
+.score-meta strong { color: #17202a; font-size: 26px; }
+.panel { padding: 20px; margin-bottom: 16px; }
+.panel-heading { margin-bottom: 14px; }
+.panel-heading h3 { margin: 0; font-size: 15px; }
+.panel-heading span { color: #7b8795; font-size: 12px; }
+.finding-list { display: grid; gap: 10px; }
+.finding { border: 1px solid #dce2ea; border-left: 4px solid #8b98a8; border-radius: 12px; padding: 15px; }
+.finding--critical { border-left-color: #a52a2a; }
+.finding--high { border-left-color: #c25b2c; }
+.finding--medium { border-left-color: #b98521; }
+.finding--low { border-left-color: #4774a6; }
+.finding--info { border-left-color: #7c8794; }
+.finding__topline { display: flex; gap: 8px; align-items: center; }
+.severity { font-size: 10px; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
+.finding__category { color: #8793a0; font-size: 11px; }
+.finding h3 { margin: 7px 0 5px; font-size: 15px; }
+.finding p, .finding__detail { color: #637180; font-size: 13px; line-height: 1.55; }
+.finding p { margin: 0 0 8px; }
+.finding__detail + .finding__detail { margin-top: 4px; }
+.results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.code-block { margin: 0; overflow: auto; padding: 14px; border-radius: 10px; background: #f5f7fa; color: #273442; font: 12px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th, td { padding: 10px 8px; border-bottom: 1px solid #edf0f4; text-align: left; vertical-align: top; }
+tbody th { font-weight: 700; }
+td code, th code { overflow-wrap: anywhere; }
+.success-state { display: flex; flex-direction: column; gap: 4px; padding: 18px; border: 1px solid #d7e8db; border-radius: 10px; background: #f6fbf7; color: #2e6840; }
+.success-state span { font-size: 12px; color: #64806c; }
+.disclosure summary { cursor: pointer; font-weight: 750; }
+.disclosure p { color: #657383; font-size: 13px; line-height: 1.5; }
+.site-footer { display: flex; justify-content: space-between; gap: 20px; padding: 30px 0 40px; color: #7a8795; font-size: 11px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+@media (max-width: 720px) {
+  .site-header, main, .site-footer { width: min(100% - 22px, 1120px); }
+  .hero { padding-top: 26px; }
+  .hero h2 { font-size: 34px; }
+  .input-grid, .results-grid { grid-template-columns: 1fr; }
+  .section-heading, .results-heading { align-items: flex-start; }
+  .privacy-badge { margin-left: 0; }
+  .score-card { align-items: flex-start; }
+  .site-footer { flex-direction: column; }
+}
